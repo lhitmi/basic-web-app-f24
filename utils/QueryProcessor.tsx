@@ -53,5 +53,19 @@ export default function QueryProcessor(query: string): string {
     return result.join(', ');
   }
 
+  const primeMatch = query.toLowerCase().match(/which of the following numbers are primes: ([\d, ]+)\?/);
+  if (primeMatch) {
+    const numbers = primeMatch[1].split(',').map(num => parseInt(num.trim(), 10));
+    const isPrime = (num: number) => {
+      if (num <= 1) return false;
+      for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) return false;
+      }
+      return true;
+    };
+    const result = numbers.filter(isPrime);
+    return result.join(', ');
+  }
+
   return "";
 }
