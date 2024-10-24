@@ -19,11 +19,11 @@ export default function QueryProcessor(query: string): string {
     return "Latifa";
   }
 
-  const additionMatch = query.toLowerCase().match(/what is (\d+) plus (\d+)\?/);
+  const additionMatch = query.toLowerCase().match(/what is (\d+) plus (\d+)( plus (\d+))*\?/);
   if (additionMatch) {
-    const num1 = parseInt(additionMatch[1], 10);
-    const num2 = parseInt(additionMatch[2], 10);
-    return (num1 + num2).toString();
+    const numbers = additionMatch.slice(1).filter(Boolean).map(num => parseInt(num, 10));
+    const sum = numbers.reduce((acc, curr) => acc + curr, 0);
+    return sum.toString();
   }
 
   const largestMatch = query.toLowerCase().match(/which of the following numbers is the largest: (\d+), (\d+), (\d+)\?/);
@@ -72,6 +72,13 @@ export default function QueryProcessor(query: string): string {
     const num1 = parseInt(subtractionMatch[1], 10);
     const num2 = parseInt(subtractionMatch[2], 10);
     return (num1 - num2).toString();
+  }
+
+  const multipleAdditionMatch = query.toLowerCase().match(/what is (\d+( plus \d+)+)\?/);
+  if (multipleAdditionMatch) {
+    const numbers = multipleAdditionMatch[1].match(/\d+/g)?.map(num => parseInt(num, 10)) || [];
+    const sum = numbers.reduce((acc, curr) => acc + curr, 0);
+    return sum.toString();
   }
 
   return "";
