@@ -88,5 +88,14 @@ export default function QueryProcessor(query: string): string {
     return Math.pow(base, exponent).toString();
   }
 
+  const complexMatch = query.toLowerCase().match(/what is (\d+) plus (\d+) multiplied by (\d+)\?/);
+  if (complexMatch) {
+    const num1 = parseInt(complexMatch[1], 10);
+    const num2 = parseInt(complexMatch[2], 10);
+    const num3 = parseInt(complexMatch[3], 10);
+    const result = num1 + (num2 * num3);
+    return result.toString();
+  }
+
   return "";
 }
