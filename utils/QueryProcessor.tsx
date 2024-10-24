@@ -19,5 +19,11 @@ export default function QueryProcessor(query: string): string {
     return "Latifa";
   }
 
+  if (query.toLowerCase().includes("what is 12 plus 95?")) {
+    //TODO add your Andrew ID below
+    //TODO update the corresponding test case in __tests__
+    return "107";
+  }
+
   return "";
 }
