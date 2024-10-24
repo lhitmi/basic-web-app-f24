@@ -42,5 +42,16 @@ export default function QueryProcessor(query: string): string {
     return (num1 * num2).toString();
   }
 
+  const squareCubeMatch = query.toLowerCase().match(/which of the following numbers is both a square and a cube: ([\d, ]+)\?/);
+  if (squareCubeMatch) {
+    const numbers = squareCubeMatch[1].split(',').map(num => parseInt(num.trim(), 10));
+    const result = numbers.filter(num => {
+      const sqrt = Math.sqrt(num);
+      const cbrt = Math.cbrt(num);
+      return Number.isInteger(sqrt) && Number.isInteger(cbrt);
+    });
+    return result.join(', ');
+  }
+
   return "";
 }
