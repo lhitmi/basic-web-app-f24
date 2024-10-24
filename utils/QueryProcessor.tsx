@@ -19,11 +19,20 @@ export default function QueryProcessor(query: string): string {
     return "Latifa";
   }
 
-  const match = query.toLowerCase().match(/what is (\d+) plus (\d+)\?/);
-  if (match) {
-    const num1 = parseInt(match[1], 10);
-    const num2 = parseInt(match[2], 10);
+  const additionMatch = query.toLowerCase().match(/what is (\d+) plus (\d+)\?/);
+  if (additionMatch) {
+    const num1 = parseInt(additionMatch[1], 10);
+    const num2 = parseInt(additionMatch[2], 10);
     return (num1 + num2).toString();
+  }
+
+  const largestMatch = query.toLowerCase().match(/which of the following numbers is the largest: (\d+), (\d+), (\d+)\?/);
+  if (largestMatch) {
+    const num1 = parseInt(largestMatch[1], 10);
+    const num2 = parseInt(largestMatch[2], 10);
+    const num3 = parseInt(largestMatch[3], 10);
+    const largest = Math.max(num1, num2, num3);
+    return largest.toString();
   }
 
   return "";
